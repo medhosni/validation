@@ -1,0 +1,971 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "validation API",
+    "description": "API for validation",
+    "version": "1.0"
+  },
+  "basePath": "/",
+  "schemes": [
+    "http"
+  ],
+  "definitions": {     
+        "Tournage":{
+        "type": "object",
+        "properties":{
+           "nom" :{
+            "type": "string",
+            "required": true        
+        },           "dateDeDebut" :{
+            "type": "Date",
+            "required": true        
+        },           "dateDeFin" :{
+            "type": "Date",
+            "required": true        
+        }
+,
+        "Filmid" :{
+            "type": "string"
+        },
+,
+        "SocieteDeProductionid" :{
+            "type": "string"
+        }
+        }
+        },                
+    
+        "SocieteDeProduction":{
+        "type": "object",
+        "properties":{
+           "nom" :{
+            "type": "string",
+            "required": true        
+        }
+,
+        "Produitid" :{
+            "type": "string"
+        }
+        "Tournages" :{
+            "type": "array",
+            "items": {
+            "type": "string"
+            }}
+        
+        }
+        },                
+    
+        "Produit":{
+        "type": "object",
+        "properties":{
+           "localisationDeLaScene" :{
+            "type": "string",
+            "required": true        
+        },           "codePostal" :{
+            "type": "number",
+            "required": true        
+        },           "longitude" :{
+            "type": "number",
+            "required": true        
+        },           "latitude" :{
+            "type": "number",
+            "required": true        
+        }
+        "SocieteDeProductions" :{
+            "type": "array",
+            "items": {
+            "type": "string"
+            }}
+        
+        }
+        },                
+    
+        "Film":{
+        "type": "object",
+        "properties":{
+           "typeDeTournage" :{
+            "type": "string",
+            "required": true        
+        },           "titre" :{
+            "type": "string",
+            "required": true        
+        }
+        "Tournages" :{
+            "type": "array",
+            "items": {
+            "type": "string"
+            }},
+        
+        "User_watch_FilmId" :{
+            "type": "array",
+            "items": {
+            "type": "string"
+            }
+            }
+        }
+        },                
+    
+        "User":{
+        "type": "object",
+        "properties":{
+           "userName" :{
+            "type": "string",
+            "required": true        
+        },           "email" :{
+            "type": "string",
+            "required": true        
+        },           "password" :{
+            "type": "string",
+            "required": true        
+        },           "image" :{
+            "type": "array",
+            "items": {
+            "type": "string"
+            },            
+            "required": true        
+        },           "type" :{
+            "type": "string",
+            "required": true        
+        }
+        "User_watch_FilmId" :{
+            "type": "array",
+            "items": {
+            "type": "string"
+            }
+            }
+                }
+        }                
+   },
+  "paths": {
+    "/Tournage/add": {
+      "post": {
+        "tags":["Tournage"], 
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Tournage",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Tournage"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Tournage added successfully"
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }    
+    },
+    "/Tournage/getById/{id}": {
+      "get": {
+        "tags":["Tournage"],
+        "summary": "Get Tournage by its id",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+             "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "The ID of the Tournage to retrieve",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Tournage found successfully"
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }    
+    },
+    "/Tournage/getAll": {      
+      "get": {
+        "tags":["Tournage"],
+        "summary": "Get Tournage by its id",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Tournage found successfully"
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }    
+    },
+    "/Tournage/update/{id}": {
+      "put": {
+        "tags":["Tournage"],
+        "summary": "Update Tournage",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+        {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "The ID of the Tournage to update",
+            "type": "string"
+          },
+          {
+            "name": "Tournage",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Tournage"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Tournage added successfully"
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/Tournage/remove/{id}": {
+      "delete": {
+        "tags":["Tournage"],
+        "summary": "Delete Tournage by its id",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+             "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "The ID of the Tournage to delete",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Tournage found successfully"
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }    
+    },
+    "/SocieteDeProduction/add": {
+      "post": {
+        "tags":["SocieteDeProduction"], 
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "SocieteDeProduction",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SocieteDeProduction"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "SocieteDeProduction added successfully"
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }    
+    },
+    "/SocieteDeProduction/getById/{id}": {
+      "get": {
+        "tags":["SocieteDeProduction"],
+        "summary": "Get SocieteDeProduction by its id",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+             "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "The ID of the SocieteDeProduction to retrieve",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "SocieteDeProduction found successfully"
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }    
+    },
+    "/SocieteDeProduction/getAll": {      
+      "get": {
+        "tags":["SocieteDeProduction"],
+        "summary": "Get SocieteDeProduction by its id",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "SocieteDeProduction found successfully"
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }    
+    },
+    "/SocieteDeProduction/update/{id}": {
+      "put": {
+        "tags":["SocieteDeProduction"],
+        "summary": "Update SocieteDeProduction",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+        {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "The ID of the SocieteDeProduction to update",
+            "type": "string"
+          },
+          {
+            "name": "SocieteDeProduction",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SocieteDeProduction"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "SocieteDeProduction added successfully"
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/SocieteDeProduction/remove/{id}": {
+      "delete": {
+        "tags":["SocieteDeProduction"],
+        "summary": "Delete SocieteDeProduction by its id",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+             "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "The ID of the SocieteDeProduction to delete",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "SocieteDeProduction found successfully"
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }    
+    },
+    "/Produit/add": {
+      "post": {
+        "tags":["Produit"], 
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Produit",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Produit"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Produit added successfully"
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }    
+    },
+    "/Produit/getById/{id}": {
+      "get": {
+        "tags":["Produit"],
+        "summary": "Get Produit by its id",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+             "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "The ID of the Produit to retrieve",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Produit found successfully"
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }    
+    },
+    "/Produit/getAll": {      
+      "get": {
+        "tags":["Produit"],
+        "summary": "Get Produit by its id",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Produit found successfully"
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }    
+    },
+    "/Produit/update/{id}": {
+      "put": {
+        "tags":["Produit"],
+        "summary": "Update Produit",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+        {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "The ID of the Produit to update",
+            "type": "string"
+          },
+          {
+            "name": "Produit",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Produit"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Produit added successfully"
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/Produit/remove/{id}": {
+      "delete": {
+        "tags":["Produit"],
+        "summary": "Delete Produit by its id",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+             "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "The ID of the Produit to delete",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Produit found successfully"
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }    
+    },
+    "/Film/add": {
+      "post": {
+        "tags":["Film"], 
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Film",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Film"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Film added successfully"
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }    
+    },
+    "/Film/getById/{id}": {
+      "get": {
+        "tags":["Film"],
+        "summary": "Get Film by its id",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+             "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "The ID of the Film to retrieve",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Film found successfully"
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }    
+    },
+    "/Film/getAll": {      
+      "get": {
+        "tags":["Film"],
+        "summary": "Get Film by its id",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Film found successfully"
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }    
+    },
+    "/Film/update/{id}": {
+      "put": {
+        "tags":["Film"],
+        "summary": "Update Film",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+        {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "The ID of the Film to update",
+            "type": "string"
+          },
+          {
+            "name": "Film",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Film"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Film added successfully"
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/Film/remove/{id}": {
+      "delete": {
+        "tags":["Film"],
+        "summary": "Delete Film by its id",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+             "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "The ID of the Film to delete",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Film found successfully"
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }    
+    },
+    "/User/signup": {
+      "post": {
+        "tags":["User"],
+        "summary": "Add a new User",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+   
+          
+          {               
+            "name": "userName",
+            "in": "formData",
+            "type": "string"
+        },   
+          
+          {               
+            "name": "email",
+            "in": "formData",
+            "type": "string"
+        },   
+          
+          {               
+            "name": "password",
+            "in": "formData",
+            "type": "string"
+        },        {
+            "name": "image",
+            "in": "formData",
+            "type": "file",
+            "required": false
+          },   
+          
+          {               
+            "name": "type",
+            "in": "formData",
+            "type": "string",
+            "enum": ["Admin"]
+        }
+        ],
+        "responses": {
+          "200": {
+            "description": "User added successfully"
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }    
+    }
+    "/User/getById/{id}": {
+      "get": {
+        "tags":["User"],
+        "summary": "Get User by its id",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+             "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "The ID of the User to retrieve",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User found successfully"
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }    
+    },
+    "/User/getAll": {      
+      "get": {
+        "tags":["User"],
+        "summary": "Get User by its id",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "User found successfully"
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }    
+    },
+    "/User/update/{id}": {
+      "put": {
+        "tags":["User"],
+        "summary": "Update User",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+        
+          {   
+            "name": "userName",
+            "in": "formData",
+            "type": "string"
+        },        
+          {   
+            "name": "email",
+            "in": "formData",
+            "type": "string"
+        },        
+          {   
+            "name": "password",
+            "in": "formData",
+            "type": "string"
+        },        {
+            "name": "image",
+            "in": "formData",
+            "type": "file",
+            "required": false
+          },        
+          {   
+            "name": "type",
+            "in": "formData",
+            "type": "string",
+            "enum": ["Admin"]
+        }
+        ],
+        "responses": {
+          "200": {
+            "description": "User added successfully"
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/User/remove/{id}": {
+      "delete": {
+        "tags":["User"],
+        "summary": "Delete User by its id",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+             "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "The ID of the User to delete",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User found successfully"
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }    
+    }
+  }
+}
